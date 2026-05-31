@@ -1,7 +1,7 @@
 
 # Matheteusate
 
->Jesus came near and said to them, "All authority has been given to me in heaven and on earth. Go, therefore and, and **make disciples** of **all nations**, baptizing them in the name of the Father and of the Son and of the Holy Spirit,"
+>Jesus came near and said to them, "All authority has been given to me in heaven and on earth. Go, therefore, and **make disciples** of **all nations**, baptizing them in the name of the Father and of the Son and of the Holy Spirit,"
 >(μαθητεύσατε)
 —Matthew 28:18-19 [CSB](https://www.biblegateway.com/passage/?search=Matthew%2028%3A18-20&version=CSB)
 
