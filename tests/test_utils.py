@@ -81,6 +81,7 @@ class TestAppUtils(unittest.TestCase):
         options = [
             constants.WINE_RECOMMENDED_SIGIL,
             constants.WINE_BETA_SIGIL,
+            constants.WINE_PROTON_GE_SIGIL,
             *self.app.conf.wine_app_image_files,
             *self.app.conf.wine_binary_files,
         ]
@@ -101,6 +102,11 @@ class TestAppUtils(unittest.TestCase):
         binary = 'test/Proton/wine64.exe'
         code, _ = utils.get_winebin_code_and_desc(self.app, binary=binary)
         self.assertEqual('Proton', code)
+
+    def test_get_winebincode_proton_ge(self):
+        binary = 'data/bin/GE-Proton8-25/proton'
+        code, _ = utils.get_winebin_code_and_desc(self.app, binary=binary)
+        self.assertEqual('ProtonGE', code)
 
     def test_get_winebincode_recommended(self):
         binary = './wine-stable_10.0-x86_64.AppImage'

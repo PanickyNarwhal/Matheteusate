@@ -463,7 +463,7 @@ class PersistentConfiguration:
 
 # Needed this logic outside this class too for before when the app is initialized
 def get_wine_prefix_path(install_dir: str) -> str:
-    return f"{install_dir}/data/wine64_bottle"
+    return f"{install_dir}/data/pfx"
 
 
 def get_wine_user(wine_prefix: str) -> Optional[str]:
@@ -930,6 +930,8 @@ class Config:
             else:
                 logging.info("Failed to find any beta-specific appimage, falling back to latest release.")
                 value = self.wine_appimage_recommended_file_name
+        elif value == constants.WINE_PROTON_GE_SIGIL:
+            value = self.proton_ge_file_name.replace(".tar.gz", "") + "/proton"
 
         if self._raw.wine_binary != relative:
             self._raw.wine_binary = relative
@@ -1017,6 +1019,8 @@ class Config:
     @property
     # This used to be called WINESERVER_EXE
     def wineserver_binary(self) -> str:
+        if Path(self.wine_binary).name == 'proton':
+            return str(Path(self.wine_binary).parent / 'files' / 'bin' / 'wineserver')
         return str(Path(self.wine_binary).parent / 'wineserver')
 
     # FIXME: seems like the logic around wine appimages can be simplified
@@ -1090,6 +1094,17 @@ class Config:
         # Getting version and branch rely on the filename having this format:
         #   wine-[branch]_[version]-[arch]
         return self.wine_appimage_recommended_file_name.split('-')[1].split('_')[1]
+
+    @property
+    def proton_ge_url(self) -> str:
+        versions = self._network.proton_ge_versions()
+        if versions.latest is None:
+            raise ValueError("Failed to find release for Proton-GE")
+        return versions.latest.download_url
+
+    @property
+    def proton_ge_file_name(self) -> str:
+        return os.path.basename(self.proton_ge_url)
 
     @property
     def wine_dll_overrides(self) -> str:

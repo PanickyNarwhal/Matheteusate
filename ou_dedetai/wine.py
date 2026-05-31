@@ -72,8 +72,35 @@ def get_devel_or_stable(version: str) -> str:
 
 
 # FIXME: consider raising exceptions on error
-def get_wine_release(binary: str) -> tuple[Optional[WineRelease], str]:
-    cmd = [binary, "--version"]
+def get_wine_release(binary: str | Path) -> tuple[Optional[WineRelease], str]:
+    binary_str = str(binary)
+    if binary_str.endswith("proton"):
+        # For proton script, we need to run it with runinprefix wine --version
+        # but we also need environment variables.
+        # However, for version checking, maybe we can just look for the version file
+        # or try to run it.
+        # GE-Proton has a 'version' file in its root.
+        version_file = Path(binary_str).parent / "version"
+        if version_file.exists():
+            with open(version_file, "r") as f:
+                # File content is like: GE-Proton8-25
+                v_content = f.read().strip()
+                # We still need a numeric wine version for rules.
+                # GE-Proton8-25 is based on Wine 8.
+                # It's better to actually run it if possible.
+                pass
+
+    cmd = [binary_str, "--version"]
+    # If it's a proton script, we need to use 'runinprefix'
+    if binary_str.endswith("proton"):
+        # We need a dummy STEAM_COMPAT_DATA_PATH to run it just for version
+        # but that's complicated here. 
+        # Let's try a simpler approach: if it's proton, try to find its wine64
+        # and get version from there.
+        wine64 = Path(binary_str).parent / "files" / "bin" / "wine64"
+        if wine64.exists():
+            return get_wine_release(str(wine64))
+
     try:
         version_string = subprocess.check_output(cmd, encoding='utf-8').strip()
         logging.debug(f"Version string: {str(version_string)}")
@@ -516,6 +543,9 @@ def run_wine_completed_process(
     """
     env = get_wine_env(app, additional_wine_dll_overrides)
     command = [wine_binary]
+    if Path(wine_binary).name == 'proton':
+        command.append("runinprefix")
+
     if exe is not None:
         command.append(exe)
     if exe_args:
@@ -555,6 +585,9 @@ def run_wine_process(
         wine_binary = str(wine_binary)
 
     command = [wine_binary]
+    if Path(wine_binary).name == 'proton':
+        command.append("runinprefix")
+
     if exe is not None:
         command.append(exe)
     if exe_args:
@@ -739,7 +772,7 @@ def get_wine_env(app: App, additional_wine_dll_overrides: Optional[str]=None) ->
     logging.debug("Getting wine environment.")
     wine_env = os.environ.copy()
     winepath = Path(app.conf.wine_binary)
-    if winepath.name != 'wine64':  # AppImage
+    if winepath.name != 'wine64' and winepath.name != 'proton':  # AppImage or Proton
         winepath = Path(app.conf.wine64_binary)
     wine_env_defaults = {
         'WINE': str(winepath),
@@ -749,6 +782,13 @@ def get_wine_env(app: App, additional_wine_dll_overrides: Optional[str]=None) ->
         'WINEPREFIX': app.conf.wine_prefix,
         'WINESERVER': app.conf.wineserver_binary,
     }
+    
+    if app.conf.wine_binary_code == "ProtonGE" or winepath.name == 'proton':
+        # Proton needs these to run standalone
+        wine_env_defaults['STEAM_COMPAT_CLIENT_INSTALL_PATH'] = os.path.expanduser("~/.steam/root")
+        # STEAM_COMPAT_DATA_PATH should be the parent of the pfx directory
+        wine_env_defaults['STEAM_COMPAT_DATA_PATH'] = os.path.dirname(app.conf.wine_prefix)
+
     for k, v in wine_env_defaults.items():
         wine_env[k] = v
 

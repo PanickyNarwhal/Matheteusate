@@ -292,6 +292,10 @@ class NetworkRequests:
         repo = "FaithLife-Community/wine-appimages"
         return self._repo_version(repo)
 
+    def proton_ge_versions(self) -> GithubSoftwareReleasesInfo:
+        repo = constants.PROTON_GE_REPO
+        return self._repo_version(repo)
+
     def _url_size_and_hash(self, url: str) -> tuple[Optional[int], Optional[str]]:
         """Attempts to get the size and hash from a URL.
         Uses cache if it exists
@@ -662,6 +666,30 @@ def download_recommended_appimage(app: App):
             app.conf.installer_binary_dir,
             app=app
         )
+
+def download_proton_ge(app: App):
+    proton_ge_file_name = app.conf.proton_ge_file_name
+    # Check if the extracted directory already exists.
+    # GE-Proton releases extract to a directory named like GE-Proton8-25
+    extracted_dir_name = proton_ge_file_name.replace(".tar.gz", "")
+    dest_path = Path(app.conf.installer_binary_dir) / extracted_dir_name
+    if dest_path.is_dir():
+        return
+    
+    logos_reuse_download(
+        app.conf.proton_ge_url,
+        proton_ge_file_name,
+        app.conf.installer_binary_dir,
+        app=app
+    )
+    
+    # Extract
+    tar_path = Path(app.conf.installer_binary_dir) / proton_ge_file_name
+    app.status(f"Extracting {proton_ge_file_name}…")
+    utils.untar_file(tar_path, app.conf.installer_binary_dir)
+    
+    # Cleanup tarball
+    tar_path.unlink()
 
 def _get_faithlife_product_releases(
     faithlife_product: str,

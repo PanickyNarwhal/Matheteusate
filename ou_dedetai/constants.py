@@ -41,7 +41,8 @@ APP_ASSETS_DIR = BUNDLE_DIR / 'assets'
 APP_NAME = 'Ou Dedetai'
 BINARY_NAME = 'oudedetai'
 PACKAGE_NAME = 'ou_dedetai'
-REPO_NAME = 'OuDedetai'
+REPO_NAME = 'Matheteusate'
+PROTON_GE_REPO = "GloriousEggroll/proton-ge-custom"
 
 REPOSITORY_LINK = f"https://github.com/FaithLife-Community/{REPO_NAME}"
 WIKI_LINK = f"{REPOSITORY_LINK}/wiki"
@@ -95,6 +96,7 @@ PID_FILE = f'/tmp/{BINARY_NAME}.pid'
 
 WINE_RECOMMENDED_SIGIL = "Recommended"
 WINE_BETA_SIGIL = "Experimental (AKA Beta)"
+WINE_PROTON_GE_SIGIL = "Proton-GE (Latest)"
 
 FAITHLIFE_PRODUCTS = ["Logos", "Verbum"]
 FAITHLIFE_PRODUCT_VERSIONS = ["10"] # This used to include 9

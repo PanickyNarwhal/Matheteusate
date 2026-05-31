@@ -165,7 +165,7 @@ def get_winebin_code_and_desc(app: App, binary) -> Tuple[str, str | None]:
     """Gets the type of wine in use and it's description
     
     Returns:
-        code: One of: Recommended, AppImage, System, Proton, PlayOnLinux, Custom
+        code: One of: Recommended, AppImage, System, Proton, ProtonGE, PlayOnLinux, Custom
         description: Description of the above
     """
     # Set binary code, description, and path based on path
@@ -177,6 +177,7 @@ def get_winebin_code_and_desc(app: App, binary) -> Tuple[str, str | None]:
             "WINE must be 7.18-staging or later, or 8.16-devel or later, and cannot be version 8.0."
         ),
         "Proton": "Install using the Steam Proton fork of WINE.",
+        "ProtonGE": "Install using the GE-Proton fork of WINE.",
         "PlayOnLinux": "Install using a PlayOnLinux WINE64 binary.",
         "Custom": "Use a WINE64 binary from another directory.",
     }
@@ -197,6 +198,8 @@ def get_winebin_code_and_desc(app: App, binary) -> Tuple[str, str | None]:
         code = "AppImage"
     elif "/usr/bin/" in binary:
         code = "System"
+    elif "proton-ge" in binary.lower() or "ge-proton" in binary.lower():
+        code = "ProtonGE"
     elif "Proton" in binary:
         code = "Proton"
     elif "PlayOnLinux" in binary:
@@ -220,6 +223,7 @@ def get_wine_options(app: App) -> List[str]:
     if os_name != "alpine":
         wine_binary_options.append(constants.WINE_RECOMMENDED_SIGIL)
         wine_binary_options.append(constants.WINE_BETA_SIGIL)
+        wine_binary_options.append(constants.WINE_PROTON_GE_SIGIL)
         wine_binary_options.extend(appimages)
 
     sorted_binaries = sorted(list(set(binaries)))
@@ -480,6 +484,12 @@ def find_wine_binary_files(app: App, release_version: Optional[str]) -> list[str
         if os.path.exists(binary_path) and os.access(binary_path, os.X_OK):
             binaries.append(binary_path)
 
+    # Also check installer_binary_dir for proton scripts
+    # (e.g. data/bin/GE-Proton8-25/proton)
+    for p in Path(app.conf.installer_binary_dir).glob("GE-Proton*/proton"):
+        if p.exists() and os.access(p, os.X_OK):
+            binaries.append(str(p))
+
     for binary in binaries[:]:
         output1, output2 = wine.check_wine_version_and_branch(
             release_version,
@@ -497,6 +507,10 @@ def find_wine_binary_files(app: App, release_version: Optional[str]) -> list[str
 
 def set_appimage_symlink(app: App):
     # This function assumes make_skel() has been run once.
+    if app.conf.wine_binary_code == "ProtonGE":
+        ensure_proton_ge(app)
+        return
+
     if app.conf.wine_binary_code not in ["AppImage", "Recommended"]:
         logging.debug("AppImage commands disabled since we're not using an appimage")
         return
@@ -528,6 +542,15 @@ def set_appimage_symlink(app: App):
     delete_symlink(appimage_symlink_path)
     os.symlink(destination_file_path, appimage_symlink_path)
     app.conf.wine_appimage_path = destination_file_path
+
+
+def ensure_proton_ge(app: App):
+    if app.conf.wine_binary_code != "ProtonGE":
+        return
+
+    proton_script = Path(app.conf.wine_binary)
+    if not proton_script.exists():
+        network.download_proton_ge(app)
 
 
 def update_to_latest_lli_release(app: App):

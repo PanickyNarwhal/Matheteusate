@@ -8,12 +8,13 @@
 This program is a fork of OuDedetai (https://github.com/FaithLife-Community/OuDedetai) and is maintained by Isaac Gerling and is licensed under the MIT License.
 
 ## What this is
-Matheteusate is a Python application to install and mainatain FaithLife's Logos Bible Software on Linux and (In future) BSD through the Proton-GE compatibility layer. 
+Matheteusate is a Python application to install and maintain FaithLife's Logos Bible Software on Linux and (in the future) BSD through the Proton-GE compatibility layer. 
 
 ## Why Proton-GE
-* Proton-GE has built in DXVK and VKD3D for hardware-accelerated rendering.
-* No Winetricks is needed since native media foundation fixes mean fewer dependencies.
-* This tool manages the Proton-GE runtime automatically, without requiring Steam to be installed.
+* **Enhanced Compatibility**: Uses the GE-Proton wrapper script to provide a specialized environment optimized for Windows applications.
+* **Integrated Graphics**: Built-in DXVK and VKD3D provide hardware-accelerated rendering out of the box.
+* **Streamlined Setup**: Native media foundation fixes reduce the need for external dependencies like Winetricks.
+* **Standalone Operation**: This tool manages the GE-Proton runtime automatically—no Steam installation required.
 
 ---
 In excelsis Deo
