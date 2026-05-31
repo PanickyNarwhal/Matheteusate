@@ -4,12 +4,12 @@ from pathlib import Path
 import signal
 import textwrap
 
-from ou_dedetai import tui_screen
-from ou_dedetai.app import App
+from matheteusate import tui_screen
+from matheteusate.app import App
 
 
 def wrap_text(app: App, text: str) -> list[str]:
-    from ou_dedetai.tui_app import TUI
+    from matheteusate.tui_app import TUI
     if not isinstance(app, TUI):
         raise ValueError("curses MUST be used with the TUI")
     # Turn text into wrapped text, line by line, centered
@@ -25,7 +25,7 @@ def wrap_text(app: App, text: str) -> list[str]:
 
 
 def write_line(app: App, stdscr: curses.window, start_y, start_x, text, char_limit, attributes=curses.A_NORMAL): 
-    from ou_dedetai.tui_app import TUI
+    from matheteusate.tui_app import TUI
     if not isinstance(app, TUI):
         raise ValueError("curses MUST be used with the TUI")
     try:
@@ -37,7 +37,7 @@ def write_line(app: App, stdscr: curses.window, start_y, start_x, text, char_lim
 
 
 def title(app: App, stdscr: curses.window, title_text, title_start_y_adj):
-    from ou_dedetai.tui_app import TUI
+    from matheteusate.tui_app import TUI
     if not isinstance(app, TUI):
         raise ValueError("curses MUST be used with the TUI")
     if not stdscr:
@@ -54,7 +54,7 @@ def title(app: App, stdscr: curses.window, title_text, title_start_y_adj):
 
 
 def text_centered(app: App, stdscr: curses.window, text: str, start_y=0) -> tuple[int, list[str]]:
-    from ou_dedetai.tui_app import TUI
+    from matheteusate.tui_app import TUI
     if not isinstance(app, TUI):
         raise ValueError("curses MUST be used with the TUI")
     text_lines = wrap_text(app, text)
@@ -88,7 +88,7 @@ def spinner(app: App, stdscr: curses.window, index: int, start_y: int = 0):
 
 #FIXME: Display flickers.
 def confirm(app: App, question_text: str, height=None, width=None):
-    from ou_dedetai.tui_app import TUI
+    from matheteusate.tui_app import TUI
     if not isinstance(app, TUI):
         raise ValueError("curses MUST be used with the TUI")
     stdscr = app.get_main_window()
@@ -111,7 +111,7 @@ def confirm(app: App, question_text: str, height=None, width=None):
 
 class CursesDialog:
     def __init__(self, app):
-        from ou_dedetai.tui_app import TUI
+        from matheteusate.tui_app import TUI
         self.app: TUI = app
         self.stdscr: curses.window = self.app.get_main_window()
 

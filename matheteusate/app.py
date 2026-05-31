@@ -7,8 +7,8 @@ import sys
 import threading
 from typing import Callable, NoReturn, Optional
 
-from ou_dedetai import constants
-from ou_dedetai.constants import (
+from matheteusate import constants
+from matheteusate.constants import (
     PROMPT_OPTION_DIRECTORY,
     PROMPT_OPTION_FILE,
     PROMPT_OPTION_NEW_FILE
@@ -38,9 +38,9 @@ class App(abc.ABC):
 
     def __init__(self, config, **kwargs) -> None:
         # This lazy load is required otherwise these would be circular imports
-        from ou_dedetai.config import Config
-        from ou_dedetai.logos import LogosManager
-        from ou_dedetai.system import check_incompatibilities
+        from matheteusate.config import Config
+        from matheteusate.logos import LogosManager
+        from matheteusate.system import check_incompatibilities
 
         self.conf = Config(config, self)
         self.logos = LogosManager(app=self)
@@ -286,7 +286,7 @@ class App(abc.ABC):
             SuperuserCommandNotFound
 
         May be sudo or pkexec for example"""
-        from ou_dedetai.system import get_superuser_command
+        from matheteusate.system import get_superuser_command
         return get_superuser_command()
 
     def start_thread(self, task, *args, daemon_bool: bool = True, **kwargs):

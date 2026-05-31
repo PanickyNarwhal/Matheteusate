@@ -15,7 +15,7 @@ from tkinter.ttk import Progressbar
 from tkinter.ttk import Radiobutton
 from tkinter.ttk import Separator
 
-from ou_dedetai.app import App
+from matheteusate.app import App
 
 from . import constants
 

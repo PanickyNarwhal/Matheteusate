@@ -1,4 +1,4 @@
-id: io.github.FaithlifeCommunity.OuDedetai
+id: io.github.FaithlifeCommunity.Matheteusate
 runtime: org.freedesktop.Platform
 runtime-version: &runtime-version '24.08'
 sdk: org.freedesktop.Sdk
@@ -47,7 +47,7 @@ modules:
         contents: |
           /app/lib32
           /app/lib/i386-linux-gnu
-  - name: oudedetai
+  - name: matheteusate
     buildsystem: simple
     build-commands:
       # Our installer expects sudo to be installed. Make it happy.
@@ -56,14 +56,14 @@ modules:
       # Add entrypoints
       - install -Dm755 entrypoint.sh /app/bin/entrypoint.sh
       - install -Dm755 entrypoint.product.sh /app/bin/
-      - install -Dm755 oudedetai /app/bin/oudedetai
+      - install -Dm755 matheteusate /app/bin/matheteusate
       # Copy metadata information
       - install -Dm644 appdata.xml ${FLATPAK_DEST}/share/appdata/${FLATPAK_ID}.appdata.xml
-      - install -Dm644 oudedetai.png ${FLATPAK_DEST}/share/icons/hicolor/512x512/apps/${FLATPAK_ID}.png
-      - install -Dm644 oudedetai.png ${FLATPAK_DEST}/share/icons/hicolor/512x512/apps/oudedetai.png
+      - install -Dm644 matheteusate.png ${FLATPAK_DEST}/share/icons/hicolor/512x512/apps/${FLATPAK_ID}.png
+      - install -Dm644 matheteusate.png ${FLATPAK_DEST}/share/icons/hicolor/512x512/apps/matheteusate.png
       - install -Dm644 logos.png ${FLATPAK_DEST}/share/icons/hicolor/512x512/apps/logos.png
       - install -Dm644 verbum.png ${FLATPAK_DEST}/share/icons/hicolor/512x512/apps/verbum.png
-      - install -Dm644 oudedetai.desktop ${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.desktop
+      - install -Dm644 matheteusate.desktop ${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.desktop
       - install -Dm644 logos.desktop ${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.Logos.desktop
       - install -Dm644 verbum.desktop ${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.Verbum.desktop
     sources:
@@ -76,7 +76,7 @@ modules:
           - export WINE_EXE=/app/bin/wine64
           - export DIALOG=tk
           - export INSTALLDIR=$XDG_DATA_HOME/LogosBible10
-          - /app/bin/oudedetai "$@"
+          - /app/bin/matheteusate "$@"
       - type: script
         dest-filename: entrypoint.product.sh
         commands:
@@ -88,11 +88,11 @@ modules:
           - /app/bin/entrypoint.sh --run-installed-app
       # FIXME: Should this pull from github releases?
       - type: file
-        path: ./dist/oudedetai
-        dest-filename: oudedetai
+        path: ./dist/matheteusate
+        dest-filename: matheteusate
       - type: file
-        path: ./snap/gui/oudedetai.png
-        dest-filename: oudedetai.png
+        path: ./snap/gui/matheteusate.png
+        dest-filename: matheteusate.png
       - type: file
         path: ./snap/gui/logos.png
         dest-filename: logos.png
@@ -101,14 +101,14 @@ modules:
         dest-filename: verbum.png
       # FIXME: Also support logos4 and libronixdls URL Schemes
       - type: inline
-        dest-filename: oudedetai.desktop
+        dest-filename: matheteusate.desktop
         contents: |
           [Desktop Entry]
           Name=Ou Dedetai
           GenericName=FaithLife Wine App Installer
           Comment=Installs and manages either Logos or Verbum via Wine and Flatpak. Community supported.
           Exec=/app/bin/entrypoint.sh
-          Icon=/app/share/icons/hicolor/512x512/apps/oudedetai.png
+          Icon=/app/share/icons/hicolor/512x512/apps/matheteusate.png
           Terminal=false
           Type=Application
           StartupWMClass=Ou Dedetai
@@ -147,7 +147,7 @@ modules:
         contents: |
           <?xml version="1.0" encoding="UTF-8"?>
           <component type="console-application">
-            <id>io.github.FaithlifeCommunity.OuDedetai</id>
+            <id>io.github.FaithlifeCommunity.Matheteusate</id>
             
             <name>Ou Dedetai</name>
             <summary>Installer for Logos/Verbium from FaithLife</summary>
@@ -161,7 +161,7 @@ modules:
               </p>
             </description>
             
-            <icon type="stock">oudedetai</icon>
+            <icon type="stock">matheteusate</icon>
             
             <categories>
               <category>Education</category>
@@ -169,7 +169,7 @@ modules:
             </categories>
             
             <provides>
-              <binary>oudedetai</binary>
+              <binary>matheteusate</binary>
             </provides>
           </component>
 finish-args:

@@ -4,8 +4,8 @@ import curses
 import logging.handlers
 from typing import Callable, Tuple
 
-from ou_dedetai.app import UserExitedFromAsk
-from ou_dedetai.config import (
+from matheteusate.app import UserExitedFromAsk
+from matheteusate.config import (
     EphemeralConfiguration, PersistentConfiguration, get_wine_prefix_path
 )
 
@@ -17,7 +17,6 @@ from .repair import detect_and_recover
 
 from . import cli
 from . import constants
-from . import gui_app
 from . import msg
 from . import system
 from . import tui_app
@@ -322,6 +321,7 @@ def run_control_panel(ephemeral_config: EphemeralConfiguration):
     dialog = ephemeral_config.dialog or system.get_dialog()
     logging.info(f"Using DIALOG: {dialog}")
     if dialog == 'tk':
+        from . import gui_app
         gui_app.start_gui_app(ephemeral_config)
     else:
         try:
@@ -342,6 +342,7 @@ def install_app(ephemeral_config: EphemeralConfiguration):
     dialog = ephemeral_config.dialog or system.get_dialog()
     logging.info(f"Using DIALOG: {dialog}")
     if dialog == 'tk':
+        from . import gui_app
         gui_app.start_gui_app(ephemeral_config, install_only=True)
     else:
         cli.CLI(ephemeral_config).install_app()

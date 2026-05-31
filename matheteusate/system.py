@@ -18,8 +18,8 @@ from packaging.version import Version
 from pathlib import Path
 from typing import Optional, Tuple
 
-from ou_dedetai import constants, network, wine
-from ou_dedetai.app import App
+from matheteusate import constants, network, wine
+from matheteusate.app import App
 
 
 def fix_ld_library_path(env: Optional[MutableMapping[str, str]]) -> dict[str, str]:

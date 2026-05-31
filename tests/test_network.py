@@ -3,7 +3,7 @@ import unittest
 from pathlib import Path
 from requests.exceptions import MissingSchema
 
-import ou_dedetai.network as network
+import matheteusate.network as network
 
 # Get URL object at global level so it only runs once.
 URLOBJ = network.UrlProps('http://ip.me')

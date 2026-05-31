@@ -49,7 +49,7 @@ def run_cmd(*args, **kwargs) -> subprocess.CompletedProcess[str]:
         ) from e
     return output
 
-class OuDedetai:
+class Matheteusate:
     _binary: Optional[str] = None
     _temp_dir: Optional[str] = None
     config: Optional[Path] = None
@@ -78,7 +78,7 @@ class OuDedetai:
     @classmethod
     def _source_last_update(cls) -> float:
         """Last updated time of any source code in seconds since epoch"""
-        path = REPOSITORY_ROOT_PATH / "ou_dedetai"
+        path = REPOSITORY_ROOT_PATH / "matheteusate"
         output: float = 0
         for root, _, files in os.walk(path):
             for file in files:
@@ -88,9 +88,9 @@ class OuDedetai:
         return output
 
     @classmethod
-    def _oudedetai_binary(cls) -> str:
+    def _matheteusate_binary(cls) -> str:
         """Return the path to the binary"""
-        output = REPOSITORY_ROOT_PATH / "dist" / "oudedetai"
+        output = REPOSITORY_ROOT_PATH / "dist" / "matheteusate"
         # First check to see if we need to build.
         # If either the file doesn't exist, or it was last modified earlier than
         # the source code, rebuild.
@@ -111,7 +111,7 @@ class OuDedetai:
 
     def run(self, *args, **kwargs):
         if self._binary is None:
-            self._binary = self._oudedetai_binary()
+            self._binary = self._matheteusate_binary()
         if "env" not in kwargs:
             kwargs["env"] = {}
         env: dict[str, str] = {}
@@ -186,41 +186,41 @@ def check_logos_open() -> None:
 
 
 
-def test_run(ou_dedetai: OuDedetai):
-    ou_dedetai.run(["--stop-installed-app"])
+def test_run(matheteusate: Matheteusate):
+    matheteusate.run(["--stop-installed-app"])
 
     # First launch Run the app. This assumes that logos is spawned before this completes
-    ou_dedetai.run(["--run-installed-app"])
+    matheteusate.run(["--run-installed-app"])
 
     wait_for_true(check_logos_open)
 
-    ou_dedetai.run(["--stop-installed-app"])
+    matheteusate.run(["--stop-installed-app"])
 
 
-def test_install() -> OuDedetai:
-    ou_dedetai = OuDedetai(log_level="debug")
-    ou_dedetai.run(["--install-app", "--assume-yes"])
+def test_install() -> Matheteusate:
+    matheteusate = Matheteusate(log_level="debug")
+    matheteusate.run(["--install-app", "--assume-yes"])
     
     # To actually test the install we need to run it
-    test_run(ou_dedetai)
-    return ou_dedetai
+    test_run(matheteusate)
+    return matheteusate
 
 
-def test_remove_install_dir(ou_dedetai: OuDedetai):
-    if ou_dedetai.install_dir is None:
+def test_remove_install_dir(matheteusate: Matheteusate):
+    if matheteusate.install_dir is None:
         raise ValueError("Can only test removing install dir on isolated install")
-    ou_dedetai.run(["--remove-install-dir", "--assume-yes"])
-    if ou_dedetai.install_dir.exists():
+    matheteusate.run(["--remove-install-dir", "--assume-yes"])
+    if matheteusate.install_dir.exists():
         raise TestFailed("Installation directory exists after --remove-install-dir")
-    ou_dedetai.install_dir = None
+    matheteusate.install_dir = None
 
 
 def main():
     # FIXME: consider loop to run all of these in their supported distroboxes (https://distrobox.it/)
-    ou_dedetai = test_install()
-    test_remove_install_dir(ou_dedetai)
+    matheteusate = test_install()
+    test_remove_install_dir(matheteusate)
     
-    ou_dedetai.clean()
+    matheteusate.clean()
 
 
     # Untested:

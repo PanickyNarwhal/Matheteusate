@@ -6,9 +6,9 @@ import time
 from pathlib import Path
 from typing import List, Optional
 from typing import Tuple
-from ou_dedetai import constants
-from ou_dedetai import utils
-from ou_dedetai.app import App
+from matheteusate import constants
+from matheteusate import utils
+from matheteusate.app import App
 
 
 class BackupBase(abc.ABC):

@@ -9,12 +9,12 @@ from pathlib import Path
 from queue import Queue
 from typing import Any, Optional
 
-from ou_dedetai.app import App, UserExitedFromAsk
-from ou_dedetai.constants import (
+from matheteusate.app import App, UserExitedFromAsk
+from matheteusate.constants import (
     PROMPT_OPTION_DIRECTORY,
     PROMPT_OPTION_FILE
 )
-from ou_dedetai.config import EphemeralConfiguration
+from matheteusate.config import EphemeralConfiguration
 
 from . import backup
 from . import control

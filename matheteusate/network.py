@@ -18,7 +18,7 @@ from datetime import datetime
 
 import requests.structures
 
-from ou_dedetai.app import App
+from matheteusate.app import App
 
 from . import constants
 from . import utils
@@ -368,7 +368,7 @@ class NetworkRequests:
 
     def app_latest_version(self, channel: str) -> SoftwareReleaseInfo:
         if channel == "stable":
-            repo = "FaithLife-Community/OuDedetai"
+            repo = "FaithLife-Community/Matheteusate"
         else:
             repo = "FaithLife-Community/test-builds"
         return self._repo_latest_version(repo)

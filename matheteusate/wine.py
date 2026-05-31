@@ -8,8 +8,8 @@ from packaging.version import Version
 import tempfile
 from typing import IO, Optional
 
-from ou_dedetai import constants
-from ou_dedetai.app import App
+from matheteusate import constants
+from matheteusate.app import App
 
 from . import network
 from . import system

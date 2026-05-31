@@ -7,11 +7,11 @@ import threading
 import time
 from typing import Optional, Tuple
 
-from ou_dedetai import constants
-from ou_dedetai.app import App
-from ou_dedetai.config import EphemeralConfiguration
-from ou_dedetai.system import SuperuserCommandNotFound
-from ou_dedetai.logos import State as LogosRunningState
+from matheteusate import constants
+from matheteusate.app import App
+from matheteusate.config import EphemeralConfiguration
+from matheteusate.system import SuperuserCommandNotFound
+from matheteusate.logos import State as LogosRunningState
 
 from . import backup
 from . import control

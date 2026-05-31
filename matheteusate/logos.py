@@ -8,8 +8,8 @@ import logging
 import psutil
 import threading
 
-from ou_dedetai import database
-from ou_dedetai.app import App
+from matheteusate import database
+from matheteusate.app import App
 
 from . import system
 from . import utils
@@ -137,7 +137,7 @@ class LogosManager:
             # Logos, but since wine logging is sent directly to wine.log,
             # there's no terminal output to see. A user can see that output by:
             # tail -f ~/.local/state/FaithLife-Community/wine.log
-            # from ou_dedetai.cli import CLI
+            # from matheteusate.cli import CLI
             # if isinstance(self.app, CLI):
             #     run_logos()
             #     self.monitor()

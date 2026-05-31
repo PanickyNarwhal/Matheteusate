@@ -38,9 +38,9 @@ APP_IMAGE_DIR = BUNDLE_DIR / 'img'
 APP_ASSETS_DIR = BUNDLE_DIR / 'assets'
 
 # Define app name variables.
-APP_NAME = 'Ou Dedetai'
-BINARY_NAME = 'oudedetai'
-PACKAGE_NAME = 'ou_dedetai'
+APP_NAME = 'Matheteusate'
+BINARY_NAME = 'matheteusate'
+PACKAGE_NAME = 'matheteusate'
 REPO_NAME = 'Matheteusate'
 PROTON_GE_REPO = "GloriousEggroll/proton-ge-custom"
 
@@ -79,7 +79,7 @@ RELATIVE_BINARY_DIR = "data/bin"
 DEFAULT_WINEDEBUG = "err+all"
 LEGACY_CONFIG_FILES = [
     # If the user didn't have XDG_CONFIG_HOME set before, but now does.
-    os.path.expanduser("~/.config/FaithLife-Community/oudedetai"),
+    os.path.expanduser("~/.config/FaithLife-Community/matheteusate"),
     os.path.expanduser("~/.config/FaithLife-Community/Logos_on_Linux.json"),
     os.path.expanduser("~/.config/Logos_on_Linux/Logos_on_Linux.json"),
     os.path.expanduser("~/.config/Logos_on_Linux/Logos_on_Linux.conf")

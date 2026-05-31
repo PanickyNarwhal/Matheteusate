@@ -14,9 +14,9 @@ from typing import Any
 import webbrowser
 from zipfile import ZipFile
 
-from ou_dedetai import constants
-from ou_dedetai import system
-from ou_dedetai.app import App
+from matheteusate import constants
+from matheteusate import system
+from matheteusate.app import App
 
 
 def edit_file(config_file: str):

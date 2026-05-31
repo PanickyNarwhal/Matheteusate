@@ -5,7 +5,7 @@
 >(μαθητεύσατε)
 —Matthew 28:18-19 [CSB](https://www.biblegateway.com/passage/?search=Matthew%2028%3A18-20&version=CSB)
 
-This program is a fork of OuDedetai (https://github.com/FaithLife-Community/OuDedetai) and is maintained by Isaac Gerling and is licensed under the MIT License.
+This program is a fork of Matheteusate (https://github.com/FaithLife-Community/Matheteusate) and is maintained by Isaac Gerling and is licensed under the MIT License.
 
 ## What this is
 Matheteusate is a Python application to install and maintain FaithLife's Logos Bible Software on Linux and (in the future) BSD through the Proton-GE compatibility layer. 

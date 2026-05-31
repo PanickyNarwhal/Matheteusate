@@ -7,7 +7,7 @@ import sys
 
 from pathlib import Path
 
-from ou_dedetai import constants
+from matheteusate import constants
 
 
 class GzippedRotatingFileHandler(RotatingFileHandler):

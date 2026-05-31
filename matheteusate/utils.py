@@ -15,7 +15,7 @@ import subprocess
 import sys
 import tarfile
 import time
-from ou_dedetai.app import App
+from matheteusate.app import App
 from packaging.version import Version
 from pathlib import Path
 from typing import List, Optional, Tuple

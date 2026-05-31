@@ -19,14 +19,14 @@ from tkinter import filedialog as fd
 from tkinter.ttk import Style
 from typing import Callable, Optional
 
-from ou_dedetai.app import App, UserExitedFromAsk
-from ou_dedetai.constants import (
+from matheteusate.app import App, UserExitedFromAsk
+from matheteusate.constants import (
     PROMPT_OPTION_DIRECTORY,
     PROMPT_OPTION_FILE,
     PROMPT_OPTION_NEW_FILE,
 )
-from ou_dedetai.config import EphemeralConfiguration
-import ou_dedetai.logos
+from matheteusate.config import EphemeralConfiguration
+import matheteusate.logos
 
 from . import backup
 from . import constants
@@ -36,7 +36,7 @@ from . import installer
 from . import system
 from . import utils
 from . import wine
-import ou_dedetai
+import matheteusate
 
 class GuiApp(App):
     """Implements the App interface for all windows"""
@@ -651,7 +651,7 @@ class ControlWindow(GuiApp):
     def update_app_button(self, evt=None):
         self.gui.app_button.state(['!disabled'])
         if self.is_installed():
-            if self.logos.logos_state == ou_dedetai.logos.State.RUNNING:
+            if self.logos.logos_state == matheteusate.logos.State.RUNNING:
                 self.gui.app_buttonvar.set(f"Stop {self.conf.faithlife_product}")
                 self.gui.app_button.config(command=self.stop_logos)
             else:

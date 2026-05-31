@@ -8,18 +8,17 @@ from pathlib import Path
 import time
 from typing import Callable, Optional
 
-import ou_dedetai
-from ou_dedetai.app import App
-import ou_dedetai.cli
-from ou_dedetai.config import EphemeralConfiguration, PersistentConfiguration
-import ou_dedetai.config
-import ou_dedetai.constants
-import ou_dedetai.database
-import ou_dedetai.gui_app
-import ou_dedetai.installer
-import ou_dedetai.msg
-import ou_dedetai.system
-import ou_dedetai.utils
+import matheteusate
+from matheteusate.app import App
+import matheteusate.cli
+from matheteusate.config import EphemeralConfiguration, PersistentConfiguration
+import matheteusate.config
+import matheteusate.constants
+import matheteusate.database
+import matheteusate.installer
+import matheteusate.msg
+import matheteusate.system
+import matheteusate.utils
 
 class FailureType(Enum):
     FailedUpgrade = auto()
@@ -48,7 +47,7 @@ def detect_broken_install(
     
     # Begin checks that require a user id
     first_run = False
-    logos_user_id = ou_dedetai.config.get_logos_user_id(logos_appdata_dir)
+    logos_user_id = matheteusate.config.get_logos_user_id(logos_appdata_dir)
     if not logos_user_id:
         # No other checks we can preform without the logos_user_id
         return None
@@ -60,7 +59,7 @@ def detect_broken_install(
 
     # Recovery is best-effort we don't want to crash the app on account of failures here
     try:
-        with ou_dedetai.database.LocalUserPreferencesManager(logos_app_dir, logos_user_id) as db: 
+        with matheteusate.database.LocalUserPreferencesManager(logos_app_dir, logos_user_id) as db: 
             app_local_preferences = db.app_local_preferences
             if (
                 app_local_preferences
@@ -73,7 +72,7 @@ def detect_broken_install(
         pass
 
     if first_run:
-        logging.warning(f"Detected a failed resource download.\n{ou_dedetai.constants.SUPPORT_MESSAGE}") 
+        logging.warning(f"Detected a failed resource download.\n{matheteusate.constants.SUPPORT_MESSAGE}") 
 
     return None
 
@@ -82,14 +81,14 @@ def detect_broken_install(
 # As running the control panel in addition to the base python app logic
 # are distinct operations
 # It's possible to add a control panel function to app and make this generic
-def run_under_app(ephemeral_config: EphemeralConfiguration, func: Callable[[App], None]): 
-    dialog = ephemeral_config.dialog or ou_dedetai.system.get_dialog()
+def run_under_app(ephemeral_config: EphemeralConfiguration, func: Callable[[App], None]):
+    dialog = ephemeral_config.dialog or matheteusate.system.get_dialog()
     if dialog == 'tk':
-        return ou_dedetai.gui_app.start_gui_app(ephemeral_config, func)
+        import matheteusate.gui_app
+        return matheteusate.gui_app.start_gui_app(ephemeral_config, func)
     else:
-        app = ou_dedetai.cli.CLI(ephemeral_config)
+        app = matheteusate.cli.CLI(ephemeral_config)
         func(app)
-
 def detect_and_recover(ephemeral_config: EphemeralConfiguration):
     persistent_config = PersistentConfiguration.load_from_path(ephemeral_config.config_path) 
     if (
@@ -98,11 +97,11 @@ def detect_and_recover(ephemeral_config: EphemeralConfiguration):
     ):
         # Couldn't find enough information to install
         return
-    wine_prefix = ou_dedetai.config.get_wine_prefix_path(persistent_config.install_dir)
-    wine_user = ou_dedetai.config.get_wine_user(wine_prefix)
+    wine_prefix = matheteusate.config.get_wine_prefix_path(persistent_config.install_dir)
+    wine_user = matheteusate.config.get_wine_user(wine_prefix)
     if wine_user is None:
         return
-    logos_appdata_dir = ou_dedetai.config.get_logos_appdata_dir(
+    logos_appdata_dir = matheteusate.config.get_logos_appdata_dir(
         wine_prefix,
         wine_user,
         persistent_config.faithlife_product
@@ -133,7 +132,7 @@ def detect_and_recover(ephemeral_config: EphemeralConfiguration):
             app.status(f"Recovering {persistent_config.faithlife_product} after failed upgrade") 
             # Wait for a second so user can see this message
             time.sleep(1)
-            ou_dedetai.installer.install(app)
+            matheteusate.installer.install(app)
             app.status(f"Recovery attempt of {app.conf.faithlife_product} complete")
         run_under_app(ephemeral_config, _run)
 

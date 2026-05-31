@@ -6,7 +6,7 @@ import sys
 from pathlib import Path
 from typing import Optional
 
-from ou_dedetai.app import App, UserExitedFromAsk
+from matheteusate.app import App, UserExitedFromAsk
 
 from . import constants
 from . import network
@@ -14,7 +14,7 @@ from . import system
 from . import utils
 from . import wine
 
-from ou_dedetai.system import OpenGLIncompatible
+from matheteusate.system import OpenGLIncompatible
 
 # This step doesn't do anything per-say, but "collects" all the choices in one step
 # The app would continue to work without this function
@@ -554,7 +554,7 @@ def create_launcher_shortcuts(app: App):
     app_icon_path = app_dir / app_icon_src.name
 
     if constants.RUNMODE == 'binary':
-        oudedetai_executable = f"{installdir}/{constants.BINARY_NAME}"
+        matheteusate_executable = f"{installdir}/{constants.BINARY_NAME}"
     elif constants.RUNMODE == "source":
         script = Path(sys.argv[0]).expanduser().resolve()
         repo_dir = None
@@ -569,7 +569,7 @@ def create_launcher_shortcuts(app: App):
         py_bin = next(repo_dir.glob('*/bin/python'))
         if not py_bin.is_file():
             app.exit("Could not locate python binary in virtual environment.")
-        oudedetai_executable = f"env DIALOG=tk {py_bin} {script}"
+        matheteusate_executable = f"env DIALOG=tk {py_bin} {script}"
     elif constants.RUNMODE in ["snap", "flatpak"]:
         logging.info(f"Not creating launcher shortcuts, {constants.RUNMODE} already handles this") 
         return
@@ -587,7 +587,7 @@ def create_launcher_shortcuts(app: App):
         app_name=f"{flproduct}",
         generic_name="Bible",
         comment="Runs Faithlife Bible Software via Wine (snap). Community supported.",
-        exec_cmd=f"{oudedetai_executable} --run-installed-app",
+        exec_cmd=f"{matheteusate_executable} --run-installed-app",
         icon_path=logos_icon_path,
         wm_class=f"{flproduct.lower()}.exe",
         additional_keywords=["Catholic"] if flproduct == "Verbum" else None
@@ -599,7 +599,7 @@ def create_launcher_shortcuts(app: App):
         app_name=constants.APP_NAME,
         generic_name="FaithLife App Installer",
         comment="Installs and manages either Logos or Verbum via wine. Community supported.",
-        exec_cmd=oudedetai_executable,
+        exec_cmd=matheteusate_executable,
         icon_path=app_icon_path,
         wm_class=constants.BINARY_NAME,
     )
@@ -619,7 +619,7 @@ def create_launcher_shortcuts(app: App):
         filename=url_handler_desktop_filename,
         app_name=f"{flproduct} URL Handler",
         comment="Handles logos4: and libronixdls: URL Schemes",
-        exec_cmd=f"{oudedetai_executable} --wine '{app.conf.logos_exe_windows_path.replace('\\','\\\\')}' '%u'",
+        exec_cmd=f"{matheteusate_executable} --wine '{app.conf.logos_exe_windows_path.replace('\\','\\\\')}' '%u'",
         icon_path=app_icon_path,
         mime_types=["x-scheme-handler/logos4","x-scheme-handler/libronixdls"],
         terminal=True

@@ -18,12 +18,12 @@ jobs:
     - name: Patch snapcraft.yaml
       run: |
         echo We want to build from the current branch not re-pull from git.
-        sed -i 's#source: https://github.com/FaithLife-Community/OuDedetai.git#source: https://github.com/FaithLife-Community/OuDedetai.git\n    source-commit: ${{ github.sha }}#' snap/snapcraft.yaml
+        sed -i 's#source: https://github.com/FaithLife-Community/Matheteusate.git#source: https://github.com/FaithLife-Community/Matheteusate.git\n    source-commit: ${{ github.sha }}#' snap/snapcraft.yaml
         sed -zi 's#override-pull: |\n      craftctl default\n      craftctl set version=$(git describe --tag)#override-pull: |\n      craftctl default\n      craftctl set version=dev-$(git rev-parse --short HEAD)#' snap/snapcraft.yaml
     - name: Debug information
       run: |
         sudo ls -al ${{github.workspace}}
-        sudo ls -al ${{github.workspace}}/ou_dedetai/assets
+        sudo ls -al ${{github.workspace}}/matheteusate/assets
         cat snap/snapcraft.yaml
     - name: Build snap
       working-directory: snap
@@ -33,5 +33,5 @@ jobs:
     - name: Upload snap
       uses: actions/upload-artifact@v4
       with:
-        name: oudedetai-${{ github.sha }}.snap
+        name: matheteusate-${{ github.sha }}.snap
         path: snap/*.snap

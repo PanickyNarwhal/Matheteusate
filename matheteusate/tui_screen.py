@@ -11,11 +11,11 @@ from . import tui_curses
 if system.have_dep("dialog"):
     from . import tui_dialog
 
-from ou_dedetai.app import App
+from matheteusate.app import App
 
 class Screen:
     def __init__(self, app: App, screen_id: int, queue: Queue, event: Event):
-        from ou_dedetai.tui_app import TUI
+        from matheteusate.tui_app import TUI
         if not isinstance(app, TUI):
             raise ValueError("Cannot start TUI screen with non-TUI app")
         self.app: TUI = app
@@ -304,7 +304,7 @@ class PasswordScreen(InputScreen):
     def __init__(self, app: App, screen_id: int, queue: Queue, event: Event, question: str, default: str):
         super().__init__(app, screen_id, queue, event, question, default)
         # Update type for type linting
-        from ou_dedetai.tui_app import TUI
+        from matheteusate.tui_app import TUI
         self.app: TUI = app
         self.dialog = tui_curses.PasswordDialog(
             self.app,
@@ -416,7 +416,7 @@ class InputDialog(DialogScreen):
 class PasswordDialog(InputDialog):
     def __init__(self, app, screen_id, queue, event, question, default):
         super().__init__(app, screen_id, queue, event, question, default)
-        from ou_dedetai.tui_app import TUI
+        from matheteusate.tui_app import TUI
         self.app: TUI = app
 
     def __str__(self):

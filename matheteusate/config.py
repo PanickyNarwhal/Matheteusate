@@ -7,9 +7,9 @@ import json
 import logging
 from pathlib import Path
 
-from ou_dedetai import network, utils, constants, wine, system
+from matheteusate import network, utils, constants, wine, system
 
-from ou_dedetai.constants import PROMPT_OPTION_DIRECTORY
+from matheteusate.constants import PROMPT_OPTION_DIRECTORY
 
 @dataclass
 class LegacyConfiguration:
@@ -559,7 +559,7 @@ class Config:
         return cls._instance
 
     def __init__(self, ephemeral_config: EphemeralConfiguration, app) -> None:
-        from ou_dedetai.app import App
+        from matheteusate.app import App
         self.app: "App" = app
         self._raw = PersistentConfiguration.load_from_path(ephemeral_config.config_path)
         self._overrides = ephemeral_config
@@ -774,7 +774,7 @@ class Config:
     @property
     def winetricks_binary(self) -> str:
         """Download winetricks if it doesn't exist"""
-        from ou_dedetai import system
+        from matheteusate import system
         # Path is now static, the installer puts a symlink here if we're using appimage
         winetricks_path = Path(self.installer_binary_dir) / "winetricks"
     

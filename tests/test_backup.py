@@ -3,7 +3,7 @@ import tempfile
 import unittest
 from pathlib import Path
 from unittest.mock import Mock
-import ou_dedetai.backup as backup
+import matheteusate.backup as backup
 from . import REPODIR
 from . import TESTDATADIR
 

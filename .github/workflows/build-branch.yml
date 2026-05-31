@@ -70,9 +70,9 @@ jobs:
       run: |
         ARCH=${{ matrix.arch }}
         ./scripts/build-binary.sh $ARCH
-        BIN_NAME="oudedetai-${ARCH}"
+        BIN_NAME="matheteusate-${ARCH}"
         echo "bin_name_${ARCH}=$BIN_NAME" >> $GITHUB_OUTPUT
-        mv dist/oudedetai "dist/$BIN_NAME"
+        mv dist/matheteusate "dist/$BIN_NAME"
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4

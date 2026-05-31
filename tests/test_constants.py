@@ -1,6 +1,6 @@
 import unittest
 
-import ou_dedetai.constants as constants
+import matheteusate.constants as constants
 
 
 class TestConstants(unittest.TestCase):
